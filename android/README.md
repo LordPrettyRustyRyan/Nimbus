@@ -1,10 +1,15 @@
-# The Daily Wave
+# Nimbus - Android Client (Legacy)
 
-A modern Android news app that fetches live headlines using the [NewsAPI](https://newsapi.org/), with our own Node/Express proxy server to handle API requests securely.
+> Previously built as *'The Daily Wave'*, the original college implementation built in Java. 
+
+### It is included for reference and is **no longer maintained**. 
+
+The active version of Nimbus is the React web application backed by the shared Express API.
+
 <img width="3265" height="2000" alt="pic" src="https://github.com/user-attachments/assets/b41e5185-2b80-41ae-8358-9444cd3d9571" />
 
+<!--
 ---
-
 ## Features
 - Browse **top headlines** by category (General, Business, Sports, Technology, Health, Entertainment, Science).
 - **Search bar** to find specific news articles.
@@ -14,39 +19,6 @@ A modern Android news app that fetches live headlines using the [NewsAPI](https:
 - Custom app icon & modern UI.
 
 ---
-
-## Backend Setup (Node/Express Proxy)
-
-We use a small proxy server so the API key is **not exposed inside the Android app**.
-
-1. Go into the backend folder:
-   ```bash
-   cd newsapi-proxy
-
-2. Install dependencies:
-   ```bash
-   npm install express axios cors dotenv
-
-3. Create a .env file:
-   ```bash
-   NEWS_API_KEY=your_newsapi_key_here
-
-4. Run the server:
-   ```bash
-   node server.js
-
-By default it runs at:
-http://localhost:5000/news
-
-## Example Requests
-Get general headlines:
-http://localhost:5000/news?category=general
-
-Get technology news:
-http://localhost:5000/news?category=technology
-
-Search for a keyword:
-http://localhost:5000/news?q=bitcoin
 
 ## Android App Setup
 1. Open the project in Android Studio.
@@ -86,3 +58,4 @@ HttpUrl.Builder urlBuilder = HttpUrl.parse("http://10.0.2.2:5000/news").newBuild
 MIT License.
 This project uses NewsAPI.org (https://newsapi.org/) for educational purposes.
 Do you want me to also add a **step-by-step guide for deploying the Node server to Render** inside this README so your APK works anywhere, not just on your WiFi?
+-->
