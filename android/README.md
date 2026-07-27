@@ -1,12 +1,12 @@
 # Nimbus - Android Client (Legacy)
 
-> Previously built as *'The Daily Wave'*, the original college implementation built in Java. 
+> Originally developed as **The Daily Wave**, this Android application was created as a college project using **Java** and **Android Studio**.
 
-### It is included for reference and is **no longer maintained**. 
+This project is preserved for historical reference and is **no longer actively maintained**.
 
-The active version of Nimbus is the React web application backed by the shared Express API.
+Nimbus has since evolved into a **multi-platform architecture**, where a shared Express API powers the modern React web application.
 
-<img width="3265" height="2000" alt="pic" src="https://github.com/user-attachments/assets/b41e5185-2b80-41ae-8358-9444cd3d9571" />
+<img width="3265" height="2000" alt="Nimbus Android Client" src="https://github.com/user-attachments/assets/b41e5185-2b80-41ae-8358-9444cd3d9571" />
 
 <!--
 ---
