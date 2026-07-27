@@ -31,6 +31,8 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private final OkHttpClient client = new OkHttpClient();
+
     RecyclerView recyclerView;
     List<Article> articleList = new ArrayList<>();
     NewsRecyclerAdapter adapter;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // Map button text → API category
     Map<String, String> categoryMap = new HashMap<>();
+    private String currentCategory = "general";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getNews("general", query); // default category for search
+                getNews(currentCategory, query); // default category for search
                 return true;
             }
 
@@ -114,9 +117,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void getNews(String category, String query) {
         changeInProgress(true);
 
-        OkHttpClient client = new OkHttpClient();
-
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://10.0.2.2:5000/news").newBuilder();
+        HttpUrl.Builder urlBuilder =
+                HttpUrl.parse(Constants.NEWS_ENDPOINT)
+                        .newBuilder();
         urlBuilder.addQueryParameter("category", category.toLowerCase());
         if (query != null && !query.isEmpty()) {
             urlBuilder.addQueryParameter("q", query);
@@ -146,8 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 runOnUiThread(() -> {
                     changeInProgress(false);
-                    articleList.clear();
-                    articleList.addAll(articles);
+                    adapter.updateData(articles);
                     adapter.notifyDataSetChanged();
                 });
             }
@@ -159,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn = (Button) v;
         String btnText = btn.getText().toString().trim().toUpperCase();
 
-        String category = categoryMap.getOrDefault(btnText, "general");
-        getNews(category, null);
+        currentCategory = categoryMap.getOrDefault(btnText, "general");
+        getNews(currentCategory, null);
     }
 }
