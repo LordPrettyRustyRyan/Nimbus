@@ -1,62 +1,118 @@
 # Nimbus – News Aggregator
-Nimbus is a modern news aggregation web application built using React, Node.js, Express.
-The backend acts as a secure API layer to fetch real-time news data from NewsAPI, which is then displayed in a clean, modern React UI.
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
-## Features:
-- Browse top headlines across multiple categories from a single page.
-- Backend-powered API integration (Node + Express)
-- Clean, modern, and responsive UI
+> A news aggregation platform built around a centralized Express API, providing a responsive React web client while preserving the original Android implementation as a legacy reference.
 
-## Tech Stack
-- React.js
-- Node.js
-- Express.js
-- NewsAPI (REST API)
+**[Nimbus](nimbus-lake.vercel.app/)** is a lightweight, API-driven news aggregator designed around a shared backend architecture. Instead of allowing individual clients to communicate directly with external news providers, Nimbus routes every request through a centralized Express API that securely handles API credentials, normalizes responses, and serves a consistent REST interface.
 
-## Future Enhancements
-- Search functionality for specific news articles
-- Dark mode UI
-- Elegant loading progress indicator
-- Pagination
-- Optional database integration for caching and analytics
+The project originally began as **~~The Daily Wave~~**, a native Android application developed in Java as a college project. As the NewsAPI free tier was discontinued for production use, the project was redesigned into a modern multi-platform architecture featuring a shared backend and a completely rebuilt web interface using React and TypeScript.
 
----
+Today, Nimbus consists of three independent environments:
+- **[Nimbus API](https://nimbus-api-backend.vercel.app/)** — Express.js backend
+- **[Nimbus Web](nimbus-lake.vercel.app/)** — React + TypeScript frontend
+- **Nimbus Android (Legacy)** — Original Java implementation preserved for reference
 
-## Website Preview
-<table>
-  <tr>
-    <td style="border:1px solid #30363d; border-radius:6px; padding:6px;" align="center">
-      <img width="1920" height="1080" alt="Screenshot (1980)" src="https://github.com/user-attachments/assets/48b4e550-17f0-454e-a625-9f5914021c41" />
-    </td>
-    <td style="border:1px solid #30363d; border-radius:6px; padding:6px;" align="center">
-      <img width="1920" height="1080" alt="Screenshot (1982)" src="https://github.com/user-attachments/assets/ee79a257-e8f2-49ff-9e2b-b5645170197c" />
-    </td>
-    <td style="border:1px solid #30363d; border-radius:6px; padding:6px;" align="center">
-      <img width="1920" height="1080" alt="Screenshot (1983)" src="https://github.com/user-attachments/assets/9404549f-5be8-4b94-a3b5-857dd5d81bda" />
-    </td>
-  </tr>
-</table>
+> Although the Android application remains functional and continues to fetch news through the shared Nimbus API, it is preserved as a legacy implementation. Its user interface reflects the original design from its initial development, that is no longer being updated or maintained for very long period. Development has since moved entirely to the modern web application powered by the shared Express backend.
 
 ---
 
-## How to Run Locally:
-1. Clone the Repository
-   ```bash
-   git clone https://github.com/your-username/nimbus-news.git
-   cd nimbus-news
-2. Install Dependencies
-   ```bash
-   npm install
-3. Setup Environment Variables — Create a .env file inside the backend/ folder and add:
-      ```bash
-   NEWS_API_KEY=your_newsapi_key_here
-  > Get your API key from [NewsAPI](https://newsapi.org/)
+## Features
+- React + TypeScript web application
+- Shared Express REST API
+- Secure server-side API key management
+- Browse news by category
+- Search news articles by keyword
+- Responsive news layout
+- Read articles directly from their original source
+- Unified API responses across clients
+- 10-minute server-side response caching
+- Vercel serverless deployment
+- Legacy Android client included for historical reference
 
-4. Start Backend Server
-     ```bash
-     cd backend
-     node server.js
-  > Server will start on the configured port (e.g. http://localhost:5000).
-5. Start React Frontend — Open a new terminal, go to the project root, then run:
-   ```bash
-    npm run dev
+---
+
+<details>
+<summary><h2>Technology Stack</h2></summary>
+
+| Technology | Purpose |
+|------------|---------|
+| React | Web frontend |
+| TypeScript | Frontend development |
+| Vite | Build tooling |
+| Tailwind CSS | UI styling |
+| Express.js | REST API |
+| Node.js | Backend runtime |
+| Axios | HTTP client |
+| GNews API | News provider |
+| Vercel | Backend & frontend deployment |
+| Java | Legacy Android application |
+| Android Studio | Legacy Android development |
+
+</details>
+
+---
+
+<div align="center">
+
+| <img width="1920" height="1080" alt="Nimbus Web Preview 1" src="https://github.com/user-attachments/assets/f0cb0863-e64c-41e4-9983-2ea232215499" /> | <img width="1920" height="1080" alt="Nimbus Web Preview 2" src="https://github.com/user-attachments/assets/9e80de10-cbf6-4e1a-a6db-8b9dff8c598b" /> | <img width="1920" height="1080" alt="Nimbus Web Preview 3" src="https://github.com/user-attachments/assets/0227a199-485f-4eb1-87e2-65834f66c83d" /> |
+|:-:|:-:|:-:|
+
+</div>
+
+---
+
+# Architecture
+```mermaid
+flowchart TD
+
+A([User])
+
+A --> B[Nimbus Web<br/>React • TypeScript • Vite]
+
+subgraph Nimbus Backend
+    C[Express REST API]
+    D[Route Handler]
+    E[10 Minute Memory Cache]
+end
+
+B --> C
+C --> D
+D --> E
+
+E -->|Cache Hit| F[Return Cached Response]
+
+E -->|Cache Miss| G[GNews API]
+
+G --> H[Normalize Response]
+H --> I[Store in Cache]
+I --> J[Return JSON]
+
+F --> K[Render Articles]
+J --> K
+
+subgraph Legacy
+    L[Android App<br/>Java]
+end
+
+L -. Uses Same API .-> C
+```
+
+---
+
+# Development Notes
+
+### Project Evolution
+
+Nimbus originally started as a native Android college project. Following changes to the NewsAPI free tier, the project was redesigned around a centralized backend architecture, allowing multiple clients to consume the same REST API without exposing API credentials.
+
+The result is a cleaner, easier-to-maintain architecture where the backend acts as a dedicated gateway while the frontend focuses solely on the user experience.
+
+### Repository Organization
+
+The repository is organized as a monorepo containing independent applications that share a common backend.
