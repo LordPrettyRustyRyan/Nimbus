@@ -1,5 +1,4 @@
 import type { NewsArticle } from "../types/news";
-
 import NewsCard from "./NewsCard";
 
 interface Props {
